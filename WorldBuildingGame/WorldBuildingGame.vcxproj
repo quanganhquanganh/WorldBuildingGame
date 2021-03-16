@@ -146,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cards.cpp" />
+    <ClCompile Include="Fighter.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Stealth.cpp" />
   </ItemGroup>

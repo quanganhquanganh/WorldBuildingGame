@@ -1,11 +1,10 @@
 #include "Stealth.h"
 #include <cmath>
-#include "rand_tools.h"
 
 namespace WorldGame {
 	using Type = Tile::Type;
 
-	void SeedGeneration(long l) {
+	void seed_gen(long l) {
 		seed_rand(l);
 	}
 

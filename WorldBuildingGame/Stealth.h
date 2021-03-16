@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include "rand_tools.h"
 
 #ifndef STEALTH_LIB
 #define STEALTH_LIB
@@ -10,12 +11,7 @@ namespace WorldGame {
 	class Tile {
 	public:
 		enum class Type {
-			EMPTY = 0,
-			SAFE,
-			NORMAL,
-			WORLD,
-			CITY,
-			SHELTER,
+			EMPTY = 0, SAFE, NORMAL, WORLD, CITY, SHELTER,
 		};
 		Tile(Type typeForTile);
 		Type get_type() const noexcept { return tileType; };
@@ -28,20 +24,19 @@ namespace WorldGame {
 	class Map {
 	public:
 		Map(int size);
-		
 		auto& get_tiles() noexcept { return tiles; }
 		const auto& get_tiles() const noexcept { return tiles; }
 
 		void all_tiles_to(Tile::Type t) noexcept;
 		void stealthify();
 		void worldify();
-		void citify();
+		//void citify();
 	private:
 		Tile::Type dT = Tile::Type::EMPTY; //default tile
 		std::vector<Tile> tiles;
 	};
 
-	void SeedGeneration(long);
+	void seed_gen(long);
 }
 
 #endif // !STEALTH_LIB
