@@ -22,28 +22,49 @@ namespace Inspirator {
 //Card member functions implementations------------------------------------------------------------------
 	
 	Card::Card(int a, int b)
-		:des_sz{ static_cast<size_t>(a) }, 
-		ev_sz{ static_cast<size_t>(b) }, 
-		descriptions{ strVector(a) }, 
-		events{ strVector(b) }
+		:des{ strVector(a) }, 
+		ev{ strVector(b) }
 	{}
 
 	Card::Card(const strVector& des_list, const strVector& ev_list)//vectors constructor
-		:des_sz{des_list.size()}, 
-		ev_sz{ev_list.size()}, 
-		descriptions{des_list}, 
-		events{ev_list}
+		:des{des_list}, 
+		ev{ev_list}
 	{}
 
+	Card::Card(const Card& c) noexcept
+		:des{ c.get_des() },
+		ev{ c.get_ev() },
+		name{ c.get_name() },
+		idea{ c.get_idea() } {}
+
+	Card& Card::operator=(const Card& c) noexcept {
+		des = c.get_des();
+		ev = c.get_ev();
+		name = c.get_name();
+		idea = c.get_idea();
+	}
+
+	Card::Card(Card&& c) noexcept
+		:des{ std::move(c.des) },
+		ev{ std::move(c.ev) },
+		name{ std::move(c.name) },
+		idea{ std::move(c.idea) } {}
+
+	Card& Card::operator=(Card&& c) noexcept {
+		des = std::move(c.des);
+		ev = std::move(c.ev);
+		name = std::move(c.name);
+		idea = std::move(c.idea);
+	}
+
 	void Card::des_add(const std::string& s) {
-		descriptions.push_back(s);
-		des_sz++;
+		des.push_back(s);
 	}
 
 	void Card::ev_add(const std::string& s) {
-		events.push_back(s);
-		ev_sz++;
+		ev.push_back(s);
 	}
+
 
 	card_randomize::card_randomize(RandFunc r, const strVector& d, const strVector& e)
 		:rand{ r }, dL{ d }, eL{ e } {}
@@ -114,7 +135,7 @@ namespace Inspirator {
 		Card buff(des, ev);
 		buff.put_idea(idea);
 
-		ca = buff;
+		ca = std::move(buff);
 
 		return is;
 	}

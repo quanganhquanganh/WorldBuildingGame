@@ -24,7 +24,6 @@ namespace WorldGame {
 	class Map {
 	public:
 		Map(int size);
-		auto& get_tiles() noexcept { return tiles; }
 		const auto& get_tiles() const noexcept { return tiles; }
 
 		void all_tiles_to(Tile::Type t) noexcept;

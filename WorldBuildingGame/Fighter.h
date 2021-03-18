@@ -23,6 +23,7 @@ namespace WorldGame {
 		void set_card(const Card&);
 		void move_card(Card&&);
 
+
 		const Card& get_card() const { return card; };
 		Card get_card() { return card; };
 

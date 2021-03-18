@@ -13,10 +13,8 @@ namespace Inspirator {
 
 	class Card {
 		using size_t = std::vector<string>::size_type;
-		size_t des_sz;
-		size_t ev_sz;
-		strVector descriptions;
-		strVector events;
+		strVector des; //Descriptions
+		strVector ev; //Events
 		string name;
 		string idea;
 	public:
@@ -25,22 +23,28 @@ namespace Inspirator {
 		Card(const strVector& d, const strVector& e); //Card constructor,
 													//using vectors of strings
 
-		size_t des_size() const { return des_sz; }
-		size_t ev_size() const { return ev_sz; }
+		Card(const Card&) noexcept;
+		Card& operator=(const Card&) noexcept;
 
-		const strVector& get_des() const { return descriptions; }
-		const strVector& get_ev() const { return events; }
+		Card(Card&&) noexcept;
+		Card& operator=(Card&&) noexcept;
 
-		const string& get_name() const { return name; }
+		size_t des_size() const noexcept { return des.size(); }
+		size_t ev_size() const noexcept { return ev.size(); }
+
+		const strVector& get_des() const noexcept { return des; }
+		const strVector& get_ev() const noexcept { return ev; }
+
+		const string& get_name() const noexcept { return name; }
 		void put_name(const string& s) { name = s; }
 
-		const string& get_idea() const { return idea; }
+		const string& get_idea() const noexcept { return idea; }
 		void put_idea(const string& s) { idea = s; }
 
 		void des_add(const string&); //Add string to descriptions
 		void ev_add(const string&); //Add string to events
 
-		void refresh() { descriptions = events = {}; des_sz = ev_sz = 0; }
+		void refresh() { des = ev = {}; name = idea = "None"; }
 	};
 
 	class card_randomize {

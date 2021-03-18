@@ -19,4 +19,12 @@ namespace WorldGame {
 	void Enemy::move_into(const Map& m) {
 		pLoop = create_p_loop(m);
 	}
+
+	void Enemy::set_card(const Card& c) {
+		card = c;
+	}
+
+	void Enemy::move_card(Card&& c) {
+		card = std::move(c);
+	}
 }
