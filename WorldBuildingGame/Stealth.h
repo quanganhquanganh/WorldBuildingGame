@@ -25,6 +25,7 @@ namespace WorldGame {
 	public:
 		Map(int size);
 		const auto& get_tiles() const noexcept { return tiles; }
+		inline int side_len() const noexcept { return sqrt(this->get_tiles().size()); }
 
 		void all_tiles_to(Tile::Type t) noexcept;
 		void stealthify();

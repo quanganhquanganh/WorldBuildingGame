@@ -18,7 +18,7 @@ namespace WorldGame {
 	}
 
 	auto randomized_n_ints(std::vector<int> vT, int n) {
-		std::vector<int> res_vec{};
+		std::vector<int> res_vec;
 		auto remove = [&vT](int i) {
 			vT[i] = vT[vT.size() - 1]; //Put the last element into the i-th position
 			vT.pop_back(); //Pop the last element
@@ -33,11 +33,10 @@ namespace WorldGame {
 		return res_vec;
 	}
 
-	inline int side_len(const Map* const m) noexcept { return sqrt(m->get_tiles().size());}
 
 	auto find_edge_tiles(const Map* const m) noexcept {
-		std::vector<int> eT{};
-		int sideLen = side_len(m);
+		std::vector<int> eT;
+		int sideLen = m->side_len();
 
 		//Add horizontal sides
 		for (int i = 0; i < sideLen; ++i) {
@@ -54,8 +53,8 @@ namespace WorldGame {
 		return eT;
 	}
 	auto find_inner_tiles(const Map* const m) noexcept {
-		std::vector<int> iT{};
-		int sideLen = side_len(m);
+		std::vector<int> iT;
+		int sideLen = m->side_len();
 		
 		for (int i = 1; i < sideLen - 1; ++i) {
 			for (int j = i * sideLen + 1; j < (i + 1) * sideLen - 1; ++j) {
@@ -113,6 +112,6 @@ namespace WorldGame {
 	}
 
 	Map::Map(int size)
-		:tiles{std::vector<Tile>((size + 1) * (size + 1), dT)} //Map is a square of (size+1)^2, the edge is used for rear tiles
+		:tiles{std::vector<Tile>(pow((size + 1),2), dT)} //Map is a square of (size+1)^2, the edge is used for rear tiles
 	{}
 }

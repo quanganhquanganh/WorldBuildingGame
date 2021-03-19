@@ -1,9 +1,15 @@
 #include "Fighter.h"
 
 namespace WorldGame {
+	Position next_sqr::operator()(Position a, Position b) {
+		int side_len = map.side_len();
+		return 0;
+	}
+
 	Enemy::Enemy(const Enemy& e)
 		:HP{ e.HP }, dam{ e.dam }, curPos{e.curPos},
 		pLoop{ e.pLoop }, card{ e.card } {}
+
 	Enemy& Enemy::operator=(const Enemy& e) {
 		HP = e.HP;
 		dam = e.dam;
@@ -12,7 +18,7 @@ namespace WorldGame {
 		curPos = e.curPos;
 	}
 
-	std::queue<Position> create_p_loop(const Map& m) {
+	std::stack<Position> create_p_loop(const Map& m) {
 
 	}
 
