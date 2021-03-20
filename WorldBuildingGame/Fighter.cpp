@@ -3,13 +3,13 @@
 namespace WorldGame {
 	Enemy::Enemy(const Enemy& e)
 		:HP{ e.HP }, dam{ e.dam }, curPos{e.curPos},
-		pLoop{ e.pLoop }, crd{ e.card } {}
+		pLoop{ e.pLoop }, crd{ e.crd } {}
 
 	Enemy& Enemy::operator=(const Enemy& e) {
 		HP = e.HP;
 		dam = e.dam;
 		pLoop = e.pLoop;
-		crd = e.card;
+		crd = e.crd;
 		curPos = e.curPos;
 		return *this;
 	}
