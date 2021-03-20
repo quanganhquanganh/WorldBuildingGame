@@ -4,6 +4,8 @@
 #include <random>
 #include <fstream>
 #include <vector>
+#include <utility>
+#include <iterator>
 
 //Random apparatus for randomizing cards descriptions and events----------------------------------------------------------------------
 
@@ -39,9 +41,20 @@ inline auto rand_element(const std::vector<T>& v) {
 	return v[basic_random::get(0, v.size() - 1)];
 }
 
+/*
+template<typename T>
+inline auto rand_element(typename std::vector<T>::iterator begin, typename std::vector<T>::iterator end) {
+	const auto size = std::distance(begin, end);
+	if (size == 0) return end;
+
+	return *(std::advance(begin, basic_random::get(0, end - begin + 1)));
+}
+*/
+
 template<typename T>
 auto randomized_n_values(std::vector<T> vT, int n) {
 	std::vector<T> res_vec;
+	n = (n > vT.size()) ? vT.size() : n;
 	auto remove = [&vT](int i) {
 		vT[i] = vT[vT.size() - 1]; //Put the last element into the i-th position
 		vT.pop_back(); //Pop the last element

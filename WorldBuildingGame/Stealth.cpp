@@ -30,9 +30,9 @@ namespace WorldGame {
 	}
 	*/
 
-	auto find_edge_tiles(const Map* const m) noexcept {
-		std::vector<int> eT;
-		auto sideLen = m->side_len();
+	const std::vector<Map::TileID> Map::edge_tiles() const noexcept {
+		std::vector<Map::TileID> eT;
+		auto sideLen = this->side_len();
 
 		//Add horizontal sides
 		for (int i = 0; i < sideLen; ++i) {
@@ -48,9 +48,9 @@ namespace WorldGame {
 
 		return eT;
 	}
-	auto find_inner_tiles(const Map* const m) noexcept {
-		std::vector<int> iT;
-		auto sideLen = m->side_len();
+	const std::vector<Map::TileID> Map::inner_tiles() const noexcept {
+		std::vector<Map::TileID> iT;
+		auto sideLen = this->side_len();
 		
 		for (int i = 1; i < sideLen - 1; ++i) {
 			for (int j = i * sideLen + 1; j < (i + 1) * sideLen - 1; ++j) {
@@ -70,7 +70,7 @@ namespace WorldGame {
 		this->dT = normalType;
 
 		std::vector<int> edgeTiles{};
-		edgeTiles = find_edge_tiles(this);
+		edgeTiles = this->edge_tiles();
 		auto safe_tiles = randomized_n_values(edgeTiles, maxSafeZones);
 
 		//Set safe tiles  
@@ -89,10 +89,8 @@ namespace WorldGame {
 		this->all_tiles_to(normalType);
 		this->dT = normalType;
 
-		std::vector<int> edgeTiles{};
-		std::vector<int> innerTiles{};
-		edgeTiles = find_edge_tiles(this);
-		innerTiles = find_inner_tiles(this);
+		auto edgeTiles = this->edge_tiles();
+		auto innerTiles = this->inner_tiles();
 
 		auto safe_tiles = randomized_n_values(edgeTiles, maxSafeZones);
 		auto city_tiles = randomized_n_values(innerTiles, maxCityZones);

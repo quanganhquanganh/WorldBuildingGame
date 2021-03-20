@@ -26,8 +26,12 @@ namespace WorldGame {
 		
 		void next_move(const Map&);
 
-		const Card& get_card() const { return card; };
-		Card get_card() { return card; };
+		auto& card() { return crd; };
+		const auto& card() const { return crd; }
+		auto& health() { return HP; }
+		const auto& health() const { return HP; }
+		auto& damage() { return dam; }
+		const auto& damage() const { return dam; }
 	protected:
 		void look(const Map&);
 	private:
@@ -35,14 +39,13 @@ namespace WorldGame {
 		int dam { 0 };//Enemy's Damage
 		Position curPos { 0 };
 		std::list<Position> pLoop; //Enemy's Patrol Loop
-		std::shared_ptr<Map> m;
-		Inspirator::Card card;
+		Inspirator::Card crd;
 	};
 
 	namespace Details {
 		Position get_next_pos(Position a, Position b, int side_len);
 		void gen_stats(WorldGame::Enemy&);
-		std::list<Position> add_p_loop(const Map&);
+		std::list<Position> create_p_loop(const Map&);
 	}
 }
 #endif // !FIGHTER_LIB

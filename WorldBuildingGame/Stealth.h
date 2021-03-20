@@ -4,6 +4,7 @@
 #include <vector>
 #include "tools.h"
 
+
 #ifndef STEALTH_LIB
 #define STEALTH_LIB
 
@@ -23,8 +24,13 @@ namespace WorldGame {
 	
 	class Map {
 	public:
+		using TileID = int;
+
 		Map(int size);
-		constexpr auto& get_tiles() const noexcept { return tiles; }
+		const auto& get_tiles() const noexcept { return tiles; }
+		const std::vector<TileID> edge_tiles() const noexcept;
+		const std::vector<TileID> inner_tiles() const noexcept;
+
 		inline double side_len() const noexcept { return sqrt(this->get_tiles().size()); }
 
 		void all_tiles_to(Tile::Type t) noexcept;
@@ -35,6 +41,10 @@ namespace WorldGame {
 		Tile::Type dT = Tile::Type::EMPTY; //default tile
 		std::vector<Tile> tiles;
 	};
+
+	namespace Details {
+
+	}
 }
 
 #endif // !STEALTH_LIB
