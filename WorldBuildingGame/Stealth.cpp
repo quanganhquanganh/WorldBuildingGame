@@ -4,10 +4,6 @@
 namespace WorldGame {
 	using Type = Tile::Type;
 
-	void seed_gen(long l) {
-		seed_rand(l);
-	}
-
 	Tile::Tile(Type t)
 		:tileType{ t } {}
 	
@@ -16,7 +12,7 @@ namespace WorldGame {
 			x.set_type(t);
 		}
 	}
-
+	/*
 	auto randomized_n_ints(std::vector<int> vT, int n) {
 		std::vector<int> res_vec;
 		auto remove = [&vT](int i) {
@@ -32,11 +28,11 @@ namespace WorldGame {
 
 		return res_vec;
 	}
-
+	*/
 
 	auto find_edge_tiles(const Map* const m) noexcept {
 		std::vector<int> eT;
-		int sideLen = m->side_len();
+		auto sideLen = m->side_len();
 
 		//Add horizontal sides
 		for (int i = 0; i < sideLen; ++i) {
@@ -54,7 +50,7 @@ namespace WorldGame {
 	}
 	auto find_inner_tiles(const Map* const m) noexcept {
 		std::vector<int> iT;
-		int sideLen = m->side_len();
+		auto sideLen = m->side_len();
 		
 		for (int i = 1; i < sideLen - 1; ++i) {
 			for (int j = i * sideLen + 1; j < (i + 1) * sideLen - 1; ++j) {
@@ -75,7 +71,7 @@ namespace WorldGame {
 
 		std::vector<int> edgeTiles{};
 		edgeTiles = find_edge_tiles(this);
-		auto safe_tiles = randomized_n_ints(edgeTiles, maxSafeZones);
+		auto safe_tiles = randomized_n_values(edgeTiles, maxSafeZones);
 
 		//Set safe tiles  
 		for (auto i : safe_tiles) {	
@@ -98,8 +94,8 @@ namespace WorldGame {
 		edgeTiles = find_edge_tiles(this);
 		innerTiles = find_inner_tiles(this);
 
-		auto safe_tiles = randomized_n_ints(edgeTiles, maxSafeZones);
-		auto city_tiles = randomized_n_ints(innerTiles, maxCityZones);
+		auto safe_tiles = randomized_n_values(edgeTiles, maxSafeZones);
+		auto city_tiles = randomized_n_values(innerTiles, maxCityZones);
 
 		//Set safe tiles  
 		for (auto i : safe_tiles) {
@@ -112,6 +108,6 @@ namespace WorldGame {
 	}
 
 	Map::Map(int size)
-		:tiles{std::vector<Tile>(pow((size + 1),2), dT)} //Map is a square of (size+1)^2, the edge is used for rear tiles
+		:tiles{std::vector<Tile>((unsigned int)pow((size + 1),2), dT)} //Map is a square of (size+1)^2, the edge is used for rear tiles
 	{}
 }

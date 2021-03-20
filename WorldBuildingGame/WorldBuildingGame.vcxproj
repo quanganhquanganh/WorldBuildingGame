@@ -141,7 +141,7 @@
   <ItemGroup>
     <ClInclude Include="cards.h" />
     <ClInclude Include="Fighter.h" />
-    <ClInclude Include="rand_tools.h" />
+    <ClInclude Include="tools.h" />
     <ClInclude Include="Stealth.h" />
   </ItemGroup>
   <ItemGroup>

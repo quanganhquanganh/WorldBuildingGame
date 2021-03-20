@@ -10,7 +10,7 @@ std::ostream& operator<<(std::ostream& os, const WorldGame::Tile::Type& tt) {
 }
 
 std::ostream& operator<<(std::ostream& os, const WorldGame::Map& m) {
-	int sideLen = sqrt(m.get_tiles().size());
+	auto sideLen = sqrt(m.get_tiles().size());
 	for (int i = 0; i < sideLen; ++i) {
 		for (int j = 0; j < sideLen; ++j)
 			os << m.get_tiles()[i * sideLen + j].get_type() << "\t";
@@ -21,7 +21,7 @@ std::ostream& operator<<(std::ostream& os, const WorldGame::Map& m) {
 
 int main() {
 	using namespace WorldGame;
-	SeedGeneration(time(NULL) * time(NULL));
+	basic_random::seed(static_cast<long>(time(NULL) * time(NULL)));
 	for (int i = 0; i < 5; ++i) {
 		Map testMap(12);
 		testMap.worldify();

@@ -42,6 +42,7 @@ namespace Inspirator {
 		ev = c.get_ev();
 		name = c.get_name();
 		idea = c.get_idea();
+		return *this;
 	}
 
 	Card::Card(Card&& c) noexcept
@@ -55,6 +56,7 @@ namespace Inspirator {
 		ev = std::move(c.ev);
 		name = std::move(c.name);
 		idea = std::move(c.idea);
+		return *this;
 	}
 
 	void Card::des_add(const std::string& s) {

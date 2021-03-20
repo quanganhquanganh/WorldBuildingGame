@@ -18,13 +18,13 @@
     <ClInclude Include="Stealth.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="rand_tools.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Fighter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cards.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tools.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

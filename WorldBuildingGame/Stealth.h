@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include "rand_tools.h"
+#include "tools.h"
 
 #ifndef STEALTH_LIB
 #define STEALTH_LIB
@@ -14,8 +14,8 @@ namespace WorldGame {
 			EMPTY = 0, SAFE, NORMAL, WORLD, CITY, SHELTER,
 		};
 		Tile(Type typeForTile);
-		Type get_type() const noexcept { return tileType; };
-		void set_type(Type t) noexcept { tileType = t; }
+		constexpr Type get_type() const noexcept { return tileType; };
+		constexpr void set_type(Type t) noexcept { tileType = t; }
 	private:
 		Type tileType;
 	};
@@ -24,8 +24,8 @@ namespace WorldGame {
 	class Map {
 	public:
 		Map(int size);
-		const auto& get_tiles() const noexcept { return tiles; }
-		inline int side_len() const noexcept { return sqrt(this->get_tiles().size()); }
+		constexpr auto& get_tiles() const noexcept { return tiles; }
+		inline double side_len() const noexcept { return sqrt(this->get_tiles().size()); }
 
 		void all_tiles_to(Tile::Type t) noexcept;
 		void stealthify();
@@ -35,8 +35,6 @@ namespace WorldGame {
 		Tile::Type dT = Tile::Type::EMPTY; //default tile
 		std::vector<Tile> tiles;
 	};
-
-	void seed_gen(long);
 }
 
 #endif // !STEALTH_LIB
