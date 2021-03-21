@@ -6,6 +6,11 @@
 #include <vector>
 #include <utility>
 #include <iterator>
+#include <string>
+#include <array>
+#include <cmath>
+#include <list>
+#include <memory>
 
 //Random apparatus for randomizing cards descriptions and events----------------------------------------------------------------------
 
@@ -52,7 +57,7 @@ inline auto rand_element(typename std::vector<T>::iterator begin, typename std::
 */
 
 template<typename T>
-auto randomized_n_values(std::vector<T> vT, int n) {
+auto ran_n_values(std::vector<T> vT, int n) {
 	std::vector<T> res_vec;
 	n = (n > vT.size()) ? vT.size() : n;
 	auto remove = [&vT](int i) {

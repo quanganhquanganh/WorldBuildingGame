@@ -1,7 +1,5 @@
 #include "Stealth.h"
-#include <iostream>
 #include <time.h>
-#include <vector>
 
 std::ostream& operator<<(std::ostream& os, const WorldGame::Tile::Type& tt) {
 	using Type = WorldGame::Tile::Type;

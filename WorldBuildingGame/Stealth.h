@@ -1,9 +1,6 @@
 #pragma once
 
-#include <string>
-#include <vector>
 #include "tools.h"
-
 
 #ifndef STEALTH_LIB
 #define STEALTH_LIB
@@ -41,10 +38,6 @@ namespace WorldGame {
 		Tile::Type dT = Tile::Type::EMPTY; //default tile
 		std::vector<Tile> tiles;
 	};
-
-	namespace Details {
-
-	}
 }
 
 #endif // !STEALTH_LIB
