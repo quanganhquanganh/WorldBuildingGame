@@ -45,7 +45,7 @@ namespace WorldGame {
 	};
 
 	namespace Details {
-		constexpr Position next_pos(Position a, Position b, int side_len);
+		constexpr auto next_pos(Position a, Position b, int side_len);
 		void gen_stats(WorldGame::Enemy&);
 		std::list<Position> create_p_loop(const Map&);
 	}

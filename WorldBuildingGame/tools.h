@@ -11,6 +11,7 @@
 #include <cmath>
 #include <list>
 #include <memory>
+#include <algorithm>
 
 //Random apparatus for randomizing cards descriptions and events----------------------------------------------------------------------
 
@@ -42,7 +43,7 @@ protected:
 using basic_random = Random_engine<std::default_random_engine>;
 
 template<typename T>
-inline auto rand_element(const std::vector<T>& v) {
+inline auto& rand_element(const std::vector<T>& v) {
 	return v[basic_random::get(0, v.size() - 1)];
 }
 
@@ -57,16 +58,16 @@ inline auto rand_element(typename std::vector<T>::iterator begin, typename std::
 */
 
 template<typename T>
-auto ran_n_values(std::vector<T> vT, int n) {
+auto ran_n_values(std::vector<T> vT, std::size_t n) {
 	std::vector<T> res_vec;
-	n = (n > vT.size()) ? vT.size() : n;
+	n = std::min(n, vT.size());
 	auto remove = [&vT](int i) {
 		vT[i] = vT[vT.size() - 1]; //Put the last element into the i-th position
 		vT.pop_back(); //Pop the last element
 	};
 
-	for (int i = 0; i < n; ++i) {
-		int rand_index = basic_random::get(0, vT.size() - 1);
+	for (decltype(n) i = 0; i < n; ++i) {
+		auto rand_index = basic_random::get(0, vT.size() - 1);
 		res_vec.push_back(vT[rand_index]);
 		remove(rand_index);
 	}

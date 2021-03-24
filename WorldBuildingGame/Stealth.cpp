@@ -7,8 +7,8 @@ namespace WorldGame {
 		:tileType{ t } {}
 	
 	void Map::all_tiles_to(Type t) noexcept{
-		for (auto& x : tiles) {
-			x.set_type(t);
+		for (auto& x : vT) {
+			x.type() = t;
 		}
 	}
 	/*
@@ -27,32 +27,38 @@ namespace WorldGame {
 
 		return res_vec;
 	}
+	
+
+	template<typename T>
+	constexpr inline auto cToTid(T val) {
+		return static_cast<Map::TileID>(val);
+	}
 	*/
 
-	const std::vector<Map::TileID> Map::edge_tiles() const noexcept {
+	std::vector<Map::TileID> Map::edge_tiles() const noexcept {
 		std::vector<Map::TileID> eT;
-		auto sideLen = this->side_len();
+		int sl = (decltype(sl))(this->side_len());
 
 		//Add horizontal sides
-		for (int i = 0; i < sideLen; ++i) {
+		for (auto i = 0; i < sl; ++i) {
 			eT.push_back(i);//First row
-			eT.push_back(i + sideLen * (sideLen - 1));//Last row
+			eT.push_back(i + sl * (sl - 1));//Last row
 		}
 
 		//Add vertical sides
-		for (int i = 1; i < sideLen - 1; ++i) {
-			eT.push_back(1 * sideLen);//First column w/out the corner tiles
-			eT.push_back((i + 1) * sideLen - 1);//Last column w/out the corner tiles
+		for (auto i = 1; i < sl - 1; ++i) {
+			eT.push_back(i * sl);//First column w/out the corner tiles
+			eT.push_back((i + 1) * sl - 1);//Last column w/out the corner tiles
 		}
 
 		return eT;
 	}
-	const std::vector<Map::TileID> Map::inner_tiles() const noexcept {
+	std::vector<Map::TileID> Map::inner_tiles() const noexcept {
 		std::vector<Map::TileID> iT;
-		auto sideLen = this->side_len();
+		int sl = (decltype(sl))this->side_len();
 		
-		for (int i = 1; i < sideLen - 1; ++i) {
-			for (int j = i * sideLen + 1; j < (i + 1) * sideLen - 1; ++j) {
+		for (auto i = 1; i < sl - 1; ++i) {
+			for (auto j = i * sl + 1; j < (i + 1) * sl - 1; ++j) {
 				iT.push_back(j);
 			}
 		}
@@ -74,7 +80,7 @@ namespace WorldGame {
 
 		//Set safe tiles  
 		for (auto i : safe_tiles) {	
-			tiles[i].set_type(safeType);
+			vT[i].type() = safeType;
 		}
 	}
 
@@ -96,15 +102,15 @@ namespace WorldGame {
 
 		//Set safe tiles  
 		for (auto i : safe_tiles) {
-			tiles[i].set_type(safeType);
+			vT[i].type() = safeType;
 		}
 		//Set city tiles  
 		for (auto i : city_tiles) {
-			tiles[i].set_type(cityType);
+			vT[i].type() = cityType;
 		}
 	}
 
 	Map::Map(int size)
-		:tiles{std::vector<Tile>((unsigned int)pow((size + 1),2), dT)} //Map is a square of (size+1)^2, the edge is used for rear tiles
+		:vT{std::vector<Tile>((unsigned int)pow((size + 1),2), dT)} //Map is a square of (size+1)^2, the edge is used for rear tiles
 	{}
 }
