@@ -41,6 +41,7 @@ namespace WorldGame {
 		int dam { 0 };//Enemy's Damage
 		Position curPos { 0 };//Current Position
 		std::list<Position> pLoop; //Enemy's Patrol Loop
+		std::vector<Position> vsion; //Enemy's Vision
 		Inspirator::Card crd;//Enemy's card
 	};
 

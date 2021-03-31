@@ -47,16 +47,6 @@ inline auto& rand_element(const std::vector<T>& v) {
 	return v[basic_random::get(0, v.size() - 1)];
 }
 
-/*
-template<typename T>
-inline auto rand_element(typename std::vector<T>::iterator begin, typename std::vector<T>::iterator end) {
-	const auto size = std::distance(begin, end);
-	if (size == 0) return end;
-
-	return *(std::advance(begin, basic_random::get(0, end - begin + 1)));
-}
-*/
-
 template<typename T>
 auto ran_n_values(std::vector<T> vT, std::size_t n) {
 	std::vector<T> res_vec;
@@ -73,6 +63,33 @@ auto ran_n_values(std::vector<T> vT, std::size_t n) {
 	}
 
 	return res_vec;
+}
+
+/*
+* Cut a sub matrix from a linear-like matrix 
+* starting from first position to last.
+*/
+template<class Container, //Template for matrix container
+		class First,  //Template for first iterator
+		class Last,	//Template for last iterator
+		typename Length = int>
+auto sub_matrix_indexes_vector(const Container& m, const First& f, const Last& l, Length len) {
+	auto f_dis = std::distance(std::begin(m), f);
+	auto l_dis = std::distance(std::begin(m), l);
+
+	auto f_x = f_dis % len;
+	auto l_x = l_dis % len;
+
+	auto f_y = std::floor(f_dis / len);
+	auto l_y = std::floor(l_dis / len);
+
+	std::vector<decltype(f_x)>sub_m;
+	
+	for (auto x = f_x; x < l_x; ++x)
+		for (auto y = f_y; y < l_y; ++y)
+			sub_m.push_back(x + y * len);
+
+	return sub_m;
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------

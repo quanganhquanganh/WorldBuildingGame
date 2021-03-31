@@ -6,10 +6,8 @@ namespace WorldGame {
 			double arr[2];
 		public:
 			constexpr auto operator()(Position p, int sidelen) {
-				double x = p % sidelen;
-				double y = (p - x) / sidelen;
-				arr[0] = x;
-				arr[1] = y;
+				double x = p % sidelen, y = (p - x) / sidelen;
+				arr[0] = x; arr[1] = y;
 				return arr;
 			}
 		};
@@ -68,18 +66,46 @@ namespace WorldGame {
 		//Add the position to the end of the list 
 		//assigning the enemy to go back at end of patrol
 		pLoop.push_back(curPos);
+
 	}
 
 	void Enemy::move_card(Card& c) {
 		crd = std::move(c);
 	}
 
+	template<class T>
+	using remove_const_ref_t = typename std::remove_const_t <std::remove_reference_t<T>>;
+
+
+
+	auto sur_ids(int id, const Map& m) {
+		auto sI = sub_matrix_indexes_vector(std::)
+		sI.push_back(id - 1);
+		sI.push_back(id + 1);
+		sI.push_back(id - side_len);
+		sI.push_back(id + side_len);
+		sI.push_back(id - 1 - side_len);
+		sI.push_back(id + 1 - side_len);
+		sI.push_back(id - 1 + side_len);
+		sI.push_back(id + 1 + side_len);
+
+		return sI;
+	}
+
 	void Enemy::look(const Map& m) {
-		auto valid = [&m](double id) {
+		auto& tiles = m.tiles();
+		auto isValid = [&tiles](double id) {
 			return (id >= 0 && 
-				id < m.tiles().size());
+				id < tiles.size());
 		};
-		
+		remove_const_ref_t<decltype(tiles)> sT; //Surrounding tiles
+		auto sI = sub_matrix_indexes_vector(m, m.);;
+		for (auto i : sI) {
+			if (isValid(i)) {
+				sT.push_back(tiles[i]);
+			}
+		}
+
 	}
 
 	void Enemy::next_move(const Map& m) {
