@@ -32,6 +32,7 @@ namespace WorldGame {
 		const auto& health() const { return HP; }
 		auto& damage() { return dam; }
 		const auto& damage() const { return dam; }
+
 	protected:
 		void look(const Map&);
 	private:
