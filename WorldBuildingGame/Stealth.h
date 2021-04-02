@@ -1,9 +1,6 @@
 #pragma once
 
-#include <string>
-#include <vector>
 #include "tools.h"
-
 
 #ifndef STEALTH_LIB
 #define STEALTH_LIB
@@ -15,8 +12,9 @@ namespace WorldGame {
 			EMPTY = 0, SAFE, NORMAL, WORLD, CITY, SHELTER,
 		};
 		Tile(Type typeForTile);
-		constexpr Type get_type() const noexcept { return tileType; };
-		constexpr void set_type(Type t) noexcept { tileType = t; }
+		auto& type() noexcept { return tileType; }
+		constexpr Type type() const noexcept { return tileType; }
+
 	private:
 		Type tileType;
 	};
@@ -27,11 +25,12 @@ namespace WorldGame {
 		using TileID = int;
 
 		Map(int size);
-		const auto& get_tiles() const noexcept { return tiles; }
-		const std::vector<TileID> edge_tiles() const noexcept;
-		const std::vector<TileID> inner_tiles() const noexcept;
+		auto& tiles() noexcept { return vT; }
+		constexpr auto& tiles() const noexcept { return vT; }
+		std::vector<Map::TileID> edge_tiles() const noexcept;
+		std::vector<Map::TileID> inner_tiles() const noexcept;
 
-		inline double side_len() const noexcept { return sqrt(this->get_tiles().size()); }
+		inline double side_len() const noexcept { return sqrt(this->tiles().size()); }
 
 		void all_tiles_to(Tile::Type t) noexcept;
 		void stealthify();
@@ -39,12 +38,8 @@ namespace WorldGame {
 		//void citify();
 	private:
 		Tile::Type dT = Tile::Type::EMPTY; //default tile
-		std::vector<Tile> tiles;
+		std::vector<Tile> vT;
 	};
-
-	namespace Details {
-
-	}
 }
 
 #endif // !STEALTH_LIB
