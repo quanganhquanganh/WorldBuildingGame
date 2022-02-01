@@ -111,6 +111,6 @@ namespace WorldGame {
 	}
 
 	Map::Map(int size)
-		:vT{std::vector<Tile>((unsigned int)pow((size + 1),2), dT)} //Map is a square of (size+1)^2, the edge is used for rear tiles
+		:vT{std::vector<Tile>((unsigned int)pow((size + 2),2), dT)} //Map is a square of (size+2)^2, the edge is used for rear tiles
 	{}
 }

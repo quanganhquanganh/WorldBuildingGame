@@ -55,7 +55,23 @@ namespace WorldGame {
 		curPos = e.curPos;
 		return *this;
 	}
-	
+	/*
+		Returns a list of ids of surrounding tiles
+		of the tile with id id
+	*/
+	auto sur_ids = [](int id, const Map& m) {
+		
+		auto size = (int)sqrt(m.tiles().size());
+		auto x = id % size;
+		auto y = (id - x) / size;
+		auto ids = std::vector<int>{};
+		ids.reserve(4);
+		if (x > 0) ids.push_back(id - 1);
+		if (x < size - 1) ids.push_back(id + 1);
+		if (y > 0) ids.push_back(id - size);
+		if (y < size - 1) ids.push_back(id + size);
+		return ids;
+	};
 
 	void Enemy::move_into(const Map& m) {
 		pLoop = Details::create_p_loop(m);
@@ -76,37 +92,17 @@ namespace WorldGame {
 	template<class T>
 	using remove_const_ref_t = typename std::remove_const_t <std::remove_reference_t<T>>;
 
-
-
-	auto sur_ids(int id, const Map& m) {
-		/*
-		auto sI = sub_matrix_indexes_vector(std::)
-		sI.push_back(id - 1);
-		sI.push_back(id + 1);
-		sI.push_back(id - side_len);
-		sI.push_back(id + side_len);
-		sI.push_back(id - 1 - side_len);
-		sI.push_back(id + 1 - side_len);
-		sI.push_back(id - 1 + side_len);
-		sI.push_back(id + 1 + side_len);
-
-		return sI;*/
-	}
+	template<class T>
+	using remove_const_ref_ptr_t = typename std::remove_const_t <std::remove_reference_t<T>>*;
 
 	void Enemy::look(const Map& m) {
 		auto& tiles = m.tiles();
-		auto isValid = [&tiles](double id) {
-			return (id >= 0 && 
-				id < tiles.size());
-		};
 		remove_const_ref_t<decltype(tiles)> sT; //Surrounding tiles
-		/*
-		auto sI = sub_matrix_indexes_vector(m, m.);;
+		
+		auto sI = sur_ids(curPos, m);
 		for (auto i : sI) {
-			if (isValid(i)) {
-				sT.push_back(tiles[i]);
-			}
-		}*/
+			sT.push_back(tiles[i]);
+		}
 	}
 
 	void Enemy::next_move(const Map& m) {

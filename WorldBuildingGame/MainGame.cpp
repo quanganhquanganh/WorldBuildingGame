@@ -20,8 +20,9 @@ std::ostream& operator<<(std::ostream& os, const WorldGame::Map& m) {
 int main() {
 	using namespace WorldGame;
 	basic_random::seed(static_cast<long>(time(NULL) * time(NULL)));
+
 	for (int i = 0; i < 5; ++i) {
-		Map testMap(1);
+		Map testMap(4);
 		testMap.worldify();
 		std::cout << "Map #" << i << std::endl
 				<< testMap << std::endl;
