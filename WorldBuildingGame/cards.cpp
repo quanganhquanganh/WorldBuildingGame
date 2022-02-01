@@ -1,11 +1,11 @@
 #include <fstream>
-#include "cards.h"
+#include "cards.hpp"
+#include "tools.hpp"
 
 namespace Inspirator {
-	strVector get_list(std::istream& is, const string& identifier) {
-		strVector list;
+	strvec get_list(std::istream& is, const string& identifier) {
+		strvec list;
 		string s;
-		char c = 0;
 		std::getline(is, s);
 		if (s != identifier) {
 			is.clear(std::ios_base::failbit);
@@ -21,43 +21,21 @@ namespace Inspirator {
 
 //Card member functions implementations------------------------------------------------------------------
 	
-	Card::Card(int a, int b)
-		:des{ strVector(a) }, 
-		ev{ strVector(b) }
+	Card::Card(const std::string& s, size_t a, size_t b)
+		:n{ s },
+		des{ strvec(a) }, 
+		ev{ strvec(b) },
+		des_sze{ a },
+		ev_sze{ b }
 	{}
 
-	Card::Card(const strVector& des_list, const strVector& ev_list)//vectors constructor
-		:des{des_list}, 
-		ev{ev_list}
+	Card::Card(const std::string& s, const strvec& des_list, const strvec& ev_list)//vectors constructor
+		:n{ s },
+		des{des_list}, 
+		ev{ev_list},
+		des_sze{ des_list.size() },
+		ev_sze{ ev_list.size() }
 	{}
-
-	Card::Card(const Card& c) noexcept
-		:des{ c.get_des() },
-		ev{ c.get_ev() },
-		name{ c.get_name() },
-		idea{ c.get_idea() } {}
-
-	Card& Card::operator=(const Card& c) noexcept {
-		des = c.get_des();
-		ev = c.get_ev();
-		name = c.get_name();
-		idea = c.get_idea();
-		return *this;
-	}
-
-	Card::Card(Card&& c) noexcept
-		:des{ std::move(c.des) },
-		ev{ std::move(c.ev) },
-		name{ std::move(c.name) },
-		idea{ std::move(c.idea) } {}
-
-	Card& Card::operator=(Card&& c) noexcept {
-		des = std::move(c.des);
-		ev = std::move(c.ev);
-		name = std::move(c.name);
-		idea = std::move(c.idea);
-		return *this;
-	}
 
 	void Card::des_add(const std::string& s) {
 		des.push_back(s);
@@ -67,21 +45,33 @@ namespace Inspirator {
 		ev.push_back(s);
 	}
 
-
-	card_randomize::card_randomize(RandFunc r, const strVector& d, const strVector& e)
-		:rand{ r }, dL{ d }, eL{ e } {}
-
+	card_randomize::card_randomize(const std::vector<string>& d, const std::vector<string>& e)
+		: dL{ d }, eL{ e } {}
+	
 	void card_randomize::operator()(Card& c) {
 		c.refresh();
 		for (size_t i = 0; i < c.des_size(); ++i) {
-			c.des_add(rand(dL));
+			c.des_add(rand_element(dL));
 		}
 		for (size_t i = 0; i < c.ev_size(); ++i) {
-			c.ev_add(rand(eL));
+			c.ev_add(rand_element(eL));
 		}
 	}
 
-//ios operators implementations-----------------------------------------------------------------
+//io operators implementations-----------------------------------------------------------------
+
+	auto get_id(std::istream& is) {
+		std::string s, id;
+
+		std::getline(is, s, ':');
+		if (s != "{id") {
+			is.clear(std::ios_base::failbit);
+			return id;
+		}
+		std::getline(is, id, ';');
+		if (!is) { return id; }
+		return id;
+	}
 
 	auto get_str_vec(std::istream& is, std::string sig) {
 		//get a str vector from is with the format of v_sig{s1;s2;s3;s4;...}
@@ -97,13 +87,18 @@ namespace Inspirator {
 			res.push_back(str);
 			if (is.peek() == '}') { break; }
 		}
-		is.get();
-		return res;
+		char c = is.get();
+        if (is && (c != '}')) {
+            is.clear(std::ios_base::failbit);
+            return res;
+        }
+        return res;
 	}
 
-	constexpr char CARD_ID[] = "card";
-	constexpr char DES_ID[] = "des";
-	constexpr char EV_ID[] = "ev";
+	constexpr char DECK_HEAD[] = "deck"; //Do not mistake for dick_head
+	constexpr char CARD_HEAD[] = "card";
+	constexpr char DES_HEAD[] = "des";
+	constexpr char EV_HEAD[] = "ev";
 
 	std::istream& operator>>(std::istream& is, Card& ca) {
 		std::string ca_sig;
@@ -111,20 +106,22 @@ namespace Inspirator {
 		while (isspace(x = is.get()));
 		is.putback(x);
 
+		auto id = get_id(is);
+		if (!is) { return is; }
 		std::getline(is, ca_sig, '{');
 		if (!is) { return is; }
-		if (ca_sig != "card") {
+		if (ca_sig != CARD_HEAD) {
 			is.clear(std::ios_base::failbit);
 			return is;
 		}
-		std::vector<std::string> des = get_str_vec(is, "des");
+		std::vector<std::string> des = get_str_vec(is, DES_HEAD);
 		char c = is.get();
 		if (!is) { return is; }
 		if (c != ';') {
 			is.clear(std::ios_base::failbit);
 			return is;
 		}
-		std::vector<std::string> ev = get_str_vec(is, "ev");
+		std::vector<std::string> ev = get_str_vec(is, EV_HEAD);
 		c = is.get();
 		if (!is) { return is; }
 		if (c != ';') {
@@ -133,30 +130,111 @@ namespace Inspirator {
 		}
 		std::string idea;
 		std::getline(is, idea, '}');
+		is >> c;
 		if (!is) { return is; }
-		Card buff(des, ev);
+		if (c != '}') {
+			is.clear(std::ios_base::failbit);
+			return is;
+		}
+		Card buff(id, des, ev);
 		buff.put_idea(idea);
 
 		ca = std::move(buff);
-
+		
 		return is;
 	}
 
 	std::ostream& operator<<(std::ostream& os, const Card& ca) {
 		auto des = ca.get_des();
 		auto ev = ca.get_ev();
-		os << CARD_ID << "{";
-		os << DES_ID << "{";
+		os << "{id:" << ca.name() << ";" << CARD_HEAD << "{";
+		os << DES_HEAD << "{";
 		for (const auto& s : des) {
 			os << s;
 			os << ';';
 		}
-		os << "};" << EV_ID << "{";
+		os << "};" << EV_HEAD << "{";
 		for (const auto& s : ev) {
 			os << s;
 			os << ';';
 		}
 		os << "};";
-		return os << ca.get_idea() << '}';
+		return os << ca.get_idea() << "}}";
+	}
+
+	std::istream& operator>>(std::istream& is, Deck& de) {
+		std::string de_sig, s;
+		auto id = get_id(is);
+		if (!is) return is;
+		char c;
+		Deck buff(id);
+
+		std::getline(is, de_sig, '{');
+		if (!is) { return is; }
+		if (de_sig != DECK_HEAD) {
+			is.clear(std::ios_base::failbit);
+			return is;
+		}
+		std::getline(is, s, ':');
+		if (!is) { return is; }
+		if (s != "total") {
+			is.clear(std::ios_base::failbit);
+			return is;
+		}
+		
+		int c_num = 0; is >> c_num;
+		if (!is) { return is; }
+		for (int i = 0; i < c_num; ++i) {
+			auto tmp = std::shared_ptr<Card>(new Card());
+			is >> c >> *tmp;
+			if (!is) { return is; }
+			if (c != ';') {
+				is.clear(std::ios_base::failbit);
+				return is;
+			}
+			buff.add_card(tmp->name(), std::move(tmp));
+		}
+
+		std::getline(is, s, ':');
+		if (!is) { return is; }
+		if (s != ";}{total") {
+			is.clear(std::ios_base::failbit);
+			return is;
+		}
+		int d_num = 0; is >> d_num;
+		if (!is) { return is; }
+		for (int i = 0; i < d_num; ++i) {
+			auto tmp = std::shared_ptr<Deck>(new Deck());
+			is >> c >> *tmp;
+			if (!is) { return is; }
+			if (c != ';') {
+				is.clear(std::ios_base::failbit);
+				return is;
+			}
+			buff.add_deck(tmp->name(), std::move(tmp));
+		}
+		std::getline(is, s, '}');
+		is >> c;
+		if (!is) { return is; }
+		if (s != ";" && c != '}') {
+			is.clear(std::ios_base::failbit);
+			return is;
+		}
+		de = std::move(buff);
+
+		return is;
+	}
+	
+	std::ostream& operator<<(std::ostream& os, const Deck& de) {
+		const auto& cm = de.cards_map();
+		const auto& dm = de.decks_map();
+		os << "{id:" << de.name() << ";" << DECK_HEAD << "{total:" << cm.size() << ";";
+		for (const auto& c : cm)
+			os << *(c.second) << ";";
+		os << "}" << "{total:" << dm.size() << ";";
+		for (const auto& d : dm)
+			os << *(d.second) << ";";
+
+		return os << "}}";
 	}
 }

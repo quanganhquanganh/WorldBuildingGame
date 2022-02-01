@@ -76,7 +76,7 @@ namespace WorldGame {
 
 		std::vector<int> edgeTiles{};
 		edgeTiles = this->edge_tiles();
-		auto safe_tiles = ran_n_values(edgeTiles, maxSafeZones);
+		auto safe_tiles = rnd_vals_no_dupl(edgeTiles, maxSafeZones);
 
 		//Set safe tiles  
 		for (auto i : safe_tiles) {	
@@ -97,8 +97,8 @@ namespace WorldGame {
 		auto edgeTiles = this->edge_tiles();
 		auto innerTiles = this->inner_tiles();
 
-		auto safe_tiles = ran_n_values(edgeTiles, maxSafeZones);
-		auto city_tiles = ran_n_values(innerTiles, maxCityZones);
+		auto safe_tiles = rnd_vals_no_dupl(edgeTiles, maxSafeZones);
+		auto city_tiles = rnd_vals_no_dupl(innerTiles, maxCityZones);
 
 		//Set safe tiles  
 		for (auto i : safe_tiles) {

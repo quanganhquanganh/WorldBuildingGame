@@ -2,7 +2,7 @@
 
 #include <string>
 #include "Stealth.h"
-#include "cards.h"
+#include "cards.hpp"
 
 #ifndef FIGHTER_LIB
 #define FIGHTER_LIB

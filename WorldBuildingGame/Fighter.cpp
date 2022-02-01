@@ -33,7 +33,7 @@ namespace WorldGame {
 		std::list<Position> create_p_loop(const Map& m) {
 			auto size = m.tiles().size();
 			int n = basic_random::get(2, 4);
-			auto a = ran_n_values(m.inner_tiles(), n);
+			auto a = rnd_vals_no_dupl(m.inner_tiles(), n);
 			return std::list<Position>(a.begin(), a.end());
 		}
 
@@ -79,6 +79,7 @@ namespace WorldGame {
 
 
 	auto sur_ids(int id, const Map& m) {
+		/*
 		auto sI = sub_matrix_indexes_vector(std::)
 		sI.push_back(id - 1);
 		sI.push_back(id + 1);
@@ -89,7 +90,7 @@ namespace WorldGame {
 		sI.push_back(id - 1 + side_len);
 		sI.push_back(id + 1 + side_len);
 
-		return sI;
+		return sI;*/
 	}
 
 	void Enemy::look(const Map& m) {
@@ -99,13 +100,13 @@ namespace WorldGame {
 				id < tiles.size());
 		};
 		remove_const_ref_t<decltype(tiles)> sT; //Surrounding tiles
+		/*
 		auto sI = sub_matrix_indexes_vector(m, m.);;
 		for (auto i : sI) {
 			if (isValid(i)) {
 				sT.push_back(tiles[i]);
 			}
-		}
-
+		}*/
 	}
 
 	void Enemy::next_move(const Map& m) {

@@ -139,16 +139,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="cards.h" />
+    <ClInclude Include="cards.hpp" />
     <ClInclude Include="Fighter.h" />
     <ClInclude Include="tools.h" />
     <ClInclude Include="Stealth.h" />
+    <ClInclude Include="tools.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cards.cpp" />
     <ClCompile Include="Fighter.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Stealth.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="english.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
