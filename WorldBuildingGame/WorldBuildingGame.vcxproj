@@ -141,6 +141,8 @@
   <ItemGroup>
     <ClInclude Include="cards.hpp" />
     <ClInclude Include="Fighter.h" />
+    <ClInclude Include="Skill.h" />
+    <ClInclude Include="Speech.h" />
     <ClInclude Include="tools.h" />
     <ClInclude Include="Stealth.h" />
     <ClInclude Include="tools.hpp" />
@@ -149,6 +151,7 @@
     <ClCompile Include="cards.cpp" />
     <ClCompile Include="Fighter.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="Speech.cpp" />
     <ClCompile Include="Stealth.cpp" />
   </ItemGroup>
   <ItemGroup>

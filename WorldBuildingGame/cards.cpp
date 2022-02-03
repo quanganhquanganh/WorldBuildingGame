@@ -45,10 +45,10 @@ namespace Inspirator {
 		ev.push_back(s);
 	}
 
-	card_randomize::card_randomize(const std::vector<string>& d, const std::vector<string>& e)
+	CardFactory::CardFactory(const std::vector<string>& d, const std::vector<string>& e)
 		: dL{ d }, eL{ e } {}
 	
-	void card_randomize::operator()(Card& c) {
+	void CardFactory::operator()(Card& c) {
 		c.refresh();
 		for (size_t i = 0; i < c.des_size(); ++i) {
 			c.des_add(rand_element(dL));
@@ -160,6 +160,73 @@ namespace Inspirator {
 		}
 		os << "};";
 		return os << ca.get_idea() << "}}";
+	}
+
+	//Deck member functions implementations------------------------------------------------------------------
+	Card& Deck::get_card(const string& id) { 
+		auto res = cm.find(id);
+		if (res == cm.end()) {
+			throw std::invalid_argument("No such card in deck");
+		}
+		return *(res->second); 
+	}
+	const Card& Deck::get_card(const string& id) const { 
+		auto res = cm.find(id);
+		if (res == cm.end()) {
+			throw std::invalid_argument("No such card in deck");
+		}
+		return *(res->second);  
+	}
+	Deck& Deck::get_deck(const string& id) { 
+		auto res = dm.find(id);
+		if (res == dm.end()) {
+			throw std::invalid_argument("No such deck in deck");
+		}
+		return *(res->second); 
+	}
+	const Deck& Deck::get_deck(const string& id) const { 
+		auto res = dm.find(id);
+		if (res == dm.end()) {
+			throw std::invalid_argument("No such deck in deck");
+		}
+		return *(res->second);
+	}
+	
+	void Deck::add_card(const string& id, const CardPtr& s) { 
+		if(cm.find(id) != cm.end()) {
+			return;
+		}
+		cm.insert(std::make_pair(id, s)); 
+	}
+	void Deck::add_card(const string& id, CardPtr&& s) { 
+		if(cm.find(id) != cm.end()) {
+			return;
+		}
+		cm.insert(std::make_pair(id, std::forward<CardPtr>(s))); 
+	}
+	void Deck::add_card(const string& id, Card* p) { 
+		if(cm.find(id) != cm.end()) {
+			return;
+		}
+		cm.insert(std::make_pair(id, CardPtr(p))); 
+	}
+	void Deck::add_deck(const string& id, const DeckPtr& s) { 
+		if(dm.find(id) != dm.end()) {
+			return;
+		}
+		dm.insert(std::make_pair(id, s)); 
+	}
+	void Deck::add_deck(const string& id, DeckPtr&& p) { 
+		if(dm.find(id) != dm.end()) {
+			return;
+		}
+		dm.insert(std::make_pair(id, std::forward<DeckPtr>(p))); 
+	}
+	void Deck::add_deck(const string& id, Deck* p) {
+		if(dm.find(id) != dm.end()) {
+			return;
+		}
+		dm.insert(std::make_pair(id, DeckPtr(p))); 
 	}
 
 	std::istream& operator>>(std::istream& is, Deck& de) {

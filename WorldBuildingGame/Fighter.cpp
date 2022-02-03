@@ -37,17 +37,17 @@ namespace WorldGame {
 			return std::list<Position>(a.begin(), a.end());
 		}
 
-		void gen_stats(Enemy& e) {
+		void gen_stats(Fighter& e) {
 			e.health() = basic_random::get(5, 25);
 			e.damage() = basic_random::get(5, 20);
 		}
 	}
 
-	Enemy::Enemy(const Enemy& e)
+	Fighter::Fighter(const Fighter& e)
 		:HP{ e.HP }, dam{ e.dam }, curPos{e.curPos},
 		pLoop{ e.pLoop }, crd{ e.crd } {}
 
-	Enemy& Enemy::operator=(const Enemy& e) {
+	Fighter& Fighter::operator=(const Fighter& e) {
 		HP = e.HP;
 		dam = e.dam;
 		pLoop = e.pLoop;
@@ -73,19 +73,19 @@ namespace WorldGame {
 		return ids;
 	};
 
-	void Enemy::move_into(const Map& m) {
+	void Fighter::move_into(const Map& m) {
 		pLoop = Details::create_p_loop(m);
 		//Get current position from loop 
 		//then pop it from list
 		curPos = pLoop.front(); 
 		pLoop.pop_front();
 		//Add the position to the end of the list 
-		//assigning the enemy to go back at end of patrol
+		//assigning the Fighter to go back at end of patrol
 		pLoop.push_back(curPos);
 
 	}
 
-	void Enemy::move_card(Card& c) {
+	void Fighter::move_card(Card& c) {
 		crd = std::move(c);
 	}
 
@@ -95,7 +95,7 @@ namespace WorldGame {
 	template<class T>
 	using remove_const_ref_ptr_t = typename std::remove_const_t <std::remove_reference_t<T>>*;
 
-	void Enemy::look(const Map& m) {
+	void Fighter::look(const Map& m) {
 		auto& tiles = m.tiles();
 		remove_const_ref_t<decltype(tiles)> sT; //Surrounding tiles
 		
@@ -105,7 +105,7 @@ namespace WorldGame {
 		}
 	}
 
-	void Enemy::next_move(const Map& m) {
+	void Fighter::next_move(const Map& m) {
 		this->look(m);
 		auto np = this->pLoop.front();//Get next target and
 		if (this->curPos == np) {//pop if already reached the target

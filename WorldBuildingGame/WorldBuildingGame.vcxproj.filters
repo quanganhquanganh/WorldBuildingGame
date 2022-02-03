@@ -30,6 +30,12 @@
     <ClInclude Include="tools.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Speech.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Stealth.cpp">
@@ -42,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="Fighter.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Speech.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>

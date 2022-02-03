@@ -110,6 +110,12 @@ public:
 		return uint(static_cast<std::default_random_engine&>(engine_instance()));
 	}
 
+	template<typename IntType>
+	static typename std::enable_if_t<is_int<IntType>::value, IntType> get(IntType end) {
+		std::uniform_int_distribution<> uint(0, end);
+		return uint(static_cast<std::default_random_engine&>(engine_instance()));
+	}
+
 	template<typename InputIt>
 	static typename std::enable_if_t<is_iterator<InputIt>::value
 		, InputIt> get(InputIt first, InputIt last) {
