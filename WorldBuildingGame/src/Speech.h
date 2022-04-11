@@ -148,24 +148,12 @@ namespace WorldGame {
         
         Speech& get_speech(const std::string& id) { return (Speech&) Inspirator::Deck::get_card(id); }
         const Speech& get_speech(const std::string& id) const noexcept { return (Speech&) Inspirator::Deck::get_card(id); }
-        const auto& map() const noexcept { return Inspirator::Deck::cards_map(); }
+        const auto& speeches_map() const noexcept { return Inspirator::Deck::cards_map(); }
 
         auto size() const noexcept { return Inspirator::Deck::cards_size(); }
-
-        void add_speech(const std::string& id, const SpeechPtr& s) { 
-            if(Inspirator::Deck::get_card(id)) {
-                Inspirator::Deck::add_card(id, (std::shared_ptr<Inspirator::Card>&)*s);
-            }
-            
-        }
-
-		void add_speech(const std::string& id, SpeechPtr&& s) {
-            Inspirator::Deck::add_card(id, (std::shared_ptr<Inspirator::Card>&&)*s);
-        }
-		
-		void add_speech(const std::string& id, Speech* p) {
-            Inspirator::Deck::add_card(id, static_cast<Inspirator::Card*>(p));
-        }
+        void add_speech(const std::string& id, const SpeechPtr& s);
+		void add_speech(const std::string& id, SpeechPtr&& s);
+		void add_speech(const std::string& id, Speech* p);
     };
 }
 

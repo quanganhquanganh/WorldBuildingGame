@@ -69,7 +69,6 @@ namespace Inspirator {
 			return id;
 		}
 		std::getline(is, id, ';');
-		if (!is) { return id; }
 		return id;
 	}
 
@@ -95,7 +94,7 @@ namespace Inspirator {
         return res;
 	}
 
-	constexpr char DECK_HEAD[] = "deck"; //Do not mistake for dick_head
+	constexpr char DECK_HEAD[] = "deck";
 	constexpr char CARD_HEAD[] = "card";
 	constexpr char DES_HEAD[] = "des";
 	constexpr char EV_HEAD[] = "ev";
@@ -190,43 +189,6 @@ namespace Inspirator {
 			throw std::invalid_argument("No such deck in deck");
 		}
 		return *(res->second);
-	}
-	
-	void Deck::add_card(const string& id, const CardPtr& s) { 
-		if(cm.find(id) != cm.end()) {
-			return;
-		}
-		cm.insert(std::make_pair(id, s)); 
-	}
-	void Deck::add_card(const string& id, CardPtr&& s) { 
-		if(cm.find(id) != cm.end()) {
-			return;
-		}
-		cm.insert(std::make_pair(id, std::forward<CardPtr>(s))); 
-	}
-	void Deck::add_card(const string& id, Card* p) { 
-		if(cm.find(id) != cm.end()) {
-			return;
-		}
-		cm.insert(std::make_pair(id, CardPtr(p))); 
-	}
-	void Deck::add_deck(const string& id, const DeckPtr& s) { 
-		if(dm.find(id) != dm.end()) {
-			return;
-		}
-		dm.insert(std::make_pair(id, s)); 
-	}
-	void Deck::add_deck(const string& id, DeckPtr&& p) { 
-		if(dm.find(id) != dm.end()) {
-			return;
-		}
-		dm.insert(std::make_pair(id, std::forward<DeckPtr>(p))); 
-	}
-	void Deck::add_deck(const string& id, Deck* p) {
-		if(dm.find(id) != dm.end()) {
-			return;
-		}
-		dm.insert(std::make_pair(id, DeckPtr(p))); 
 	}
 
 	std::istream& operator>>(std::istream& is, Deck& de) {

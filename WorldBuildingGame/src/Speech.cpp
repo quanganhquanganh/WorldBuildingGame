@@ -58,4 +58,37 @@ namespace WorldGame {
         (*this)(speech);
         return speech;
     }
+
+    void SpeechDeck::add_speech(const std::string& id, const SpeechPtr& s) { 
+        auto it = Inspirator::Deck::cards_map().find(id);
+        if(it == cm.end()) {
+            Inspirator::Deck::add_card(id, s);
+            return;
+        }
+        auto& c = it->second;
+        auto& s_old = std::dynamic_pointer_cast<Speech>(c);
+        s_old->put_uses(s_old->get_uses() + s->get_uses());
+    }
+
+    void SpeechDeck::add_speech(const std::string& id, SpeechPtr&& s) {
+        auto it = Inspirator::Deck::cards_map().find(id);
+        if(it == cm.end()) {
+            Inspirator::Deck::add_card(id, std::move(s));
+            return;
+        }
+        auto& c = it->second;
+        auto& s_old = std::dynamic_pointer_cast<Speech>(c);
+        s_old->put_uses(s_old->get_uses() + s->get_uses());
+    }
+    
+    void SpeechDeck::add_speech(const std::string& id, Speech* p) {
+        auto it = Inspirator::Deck::cards_map().find(id);
+        if(it == cm.end()) {
+            Inspirator::Deck::add_card(id, p);
+            return;
+        }
+        auto& c = it->second;
+        auto& s_old = std::dynamic_pointer_cast<Speech>(c);
+        s_old->put_uses(s_old->get_uses() + p->get_uses());
+    }
 }

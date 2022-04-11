@@ -100,10 +100,10 @@ namespace Inspirator {
 		const string& name() const noexcept { return n; }
 		void put_name(const string& s) { n = s; }
 		
-		Card& get_card(const string& id) { return *cm[id]; }
-		const Card& get_card(const string& id) const { return *(cm.find(id)->second); }
-		Deck& get_deck(const string& id) { return *dm[id]; }
-		const Deck& get_deck(const string& id) const { return *(dm.find(id)->second); }
+		Card& get_card(const string& id);
+		const Card& get_card(const string& id) const;
+		Deck& get_deck(const string& id);
+		const Deck& get_deck(const string& id) const;
 		
 		const auto& cards_map() const noexcept{ return cm; }
 		const auto& decks_map() const noexcept{ return dm; }

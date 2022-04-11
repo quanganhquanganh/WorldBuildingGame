@@ -70,12 +70,11 @@ namespace WorldGame {
 		constexpr Type normalType{ Type::NORMAL };
 		constexpr Type safeType{ Type::SAFE };
 		
-		//Turn into stealth map
+		//Turn into a stealth map
 		this->all_tiles_to(normalType); 
 		this->dT = normalType;
 
-		std::vector<int> edgeTiles{};
-		edgeTiles = this->edge_tiles();
+		std::vector<int> edgeTiles = this->edge_tiles();
 		auto safe_tiles = rnd_vals_no_dupl(edgeTiles, maxSafeZones);
 
 		//Set safe tiles  
