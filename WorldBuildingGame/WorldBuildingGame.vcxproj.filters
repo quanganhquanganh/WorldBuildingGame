@@ -15,27 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Stealth.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Fighter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tools.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cards.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tools.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Skill.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Speech.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\cards.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -59,20 +38,8 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Stealth.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="MainGame.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="cards.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Fighter.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Speech.cpp">
-      <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="src\cards.cpp">
       <Filter>Header Files</Filter>

@@ -139,10 +139,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="cards.hpp" />
-    <ClInclude Include="Fighter.h" />
-    <ClInclude Include="Skill.h" />
-    <ClInclude Include="Speech.h" />
     <ClInclude Include="src\cards.hpp" />
     <ClInclude Include="src\Fighter.h" />
     <ClInclude Include="src\Skill.h" />
@@ -150,15 +146,9 @@
     <ClInclude Include="src\Stealth.h" />
     <ClInclude Include="src\tools.hpp" />
     <ClInclude Include="src\Weapon.h" />
-    <ClInclude Include="tools.h" />
-    <ClInclude Include="Stealth.h" />
-    <ClInclude Include="tools.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cards.cpp" />
-    <ClCompile Include="Fighter.cpp" />
     <ClCompile Include="MainGame.cpp" />
-    <ClCompile Include="Speech.cpp" />
     <ClCompile Include="src\cards.cpp" />
     <ClCompile Include="src\cards_test.cpp" />
     <ClCompile Include="src\Fighter.cpp" />
@@ -166,7 +156,6 @@
     <ClCompile Include="src\Skill.cpp" />
     <ClCompile Include="src\Speech.cpp" />
     <ClCompile Include="src\Stealth.cpp" />
-    <ClCompile Include="Stealth.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="english.txt" />
