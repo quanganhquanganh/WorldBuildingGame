@@ -1,6 +1,6 @@
-workspace "Game"
+workspace "WorldBuildingGame"
   architecture "x64"
-  startproject "Game"
+  startproject "WorldBuildingGame"
 
   configurations
   {
