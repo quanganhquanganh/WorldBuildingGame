@@ -134,6 +134,10 @@ namespace WorldGame {
         std::vector<Skill> _social_skills;
     };
 
+    // Forward decls
+    class SpeechDeck;
+    class Fighter;
+
     class SpeechDeck : public Inspirator::Deck {
     private:
         using CharPtr = std::shared_ptr<Fighter>;
@@ -144,6 +148,7 @@ namespace WorldGame {
          * @brief SpeechDeck
          * @param owner
         */
+        SpeechDeck();
         SpeechDeck(const CharPtr& owner);
         
         Speech& get_speech(const std::string& id) { return (Speech&) Inspirator::Deck::get_card(id); }
@@ -152,8 +157,8 @@ namespace WorldGame {
 
         auto size() const noexcept { return Inspirator::Deck::cards_size(); }
         void add_speech(const std::string& id, const SpeechPtr& s);
-		void add_speech(const std::string& id, SpeechPtr&& s);
-		void add_speech(const std::string& id, Speech* p);
+        void add_speech(const std::string& id, SpeechPtr&& s);
+        void add_speech(const std::string& id, Speech* p);
     };
 }
 

@@ -15,6 +15,8 @@ namespace WorldGame {
 	using Position = unsigned short;
 	using Inspirator::Card;
 	
+  class SpeechDeck;
+
 	class Fighter {
 	public:
 		Fighter() = default;
@@ -43,7 +45,7 @@ namespace WorldGame {
 		std::list<Position> pLoop; //Fighter's Patrol Loop
 		std::vector<Position> vsion; //Fighter's Vision
 		Inspirator::Card crd;//Fighter's card
-		SpeechDeck speeches;//Fighter's Speech Deck
+		std::unique_ptr<SpeechDeck> speechDeck;
 	};
 
 	namespace Details {

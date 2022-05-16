@@ -58,7 +58,14 @@ namespace WorldGame {
         (*this)(speech);
         return speech;
     }
-
+    SpeechDeck::SpeechDeck(const CharPtr& owner)
+      : Deck(owner->card().name()) {
+        _owner = owner;
+      }
+    SpeechDeck::SpeechDeck()
+      : Deck() {
+        _owner = nullptr;
+      }
     void SpeechDeck::add_speech(const std::string& id, const SpeechPtr& s) { 
         auto it = Inspirator::Deck::cards_map().find(id);
         if(it == cm.end()) {

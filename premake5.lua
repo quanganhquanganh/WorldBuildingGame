@@ -1,4 +1,4 @@
-workspace "WorldBuildingGame"
+workspace "WorldBuilding"
   architecture "x64"
   startproject "WorldBuildingGame"
 
@@ -6,7 +6,29 @@ workspace "WorldBuildingGame"
   {
     "Debug",
     "Release",
-    "Dist"
+  }
+
+tdir = "bin/%{cfg.buildcfg}/%{prj.name}"
+odir = "bin-obj/%{cfg.buildcfg}/%{prj.name}"
+
+project "WorldBuilding"
+  location "WorldBuilding"
+  kind "StaticLib"
+  language "C++"
+  cppdialect "C++17"
+  staticruntime "on"
+
+  targetdir(tdir)
+  objdir(odir)
+
+  files
+  {
+    "%{prj.name}/include/**.h",
+    "%{prj.name}/include/**.hpp",
+    "%{prj.name}/include/**.cpp",
+    "%{prj.name}/src/**.h",
+    "%{prj.name}/src/**.cpp",
+    "%{prj.name}/**.natvis"
   }
 
 project "WorldBuildingGame"
