@@ -3,6 +3,9 @@
 #include <string>
 #include "Stealth.h"
 #include "cards.hpp"
+#include "Skill.h"
+#include "Speech.h"
+#include "Weapon.h"
 
 #ifndef FIGHTER_LIB
 #define FIGHTER_LIB
@@ -11,13 +14,14 @@ namespace WorldGame {
 	using strVec = std::vector<std::string>;
 	using Position = unsigned short;
 	using Inspirator::Card;
-
 	
-	class Enemy {
+  class SpeechDeck;
+
+	class Fighter {
 	public:
-		Enemy(){};
-		Enemy(const Enemy&);
-		Enemy& operator=(const Enemy&);
+		Fighter() = default;
+		Fighter(const Fighter&);
+		Fighter& operator=(const Fighter&);
 
 		//Actions----------------------------------------------------------------------------
 		void move_into(const Map&);
@@ -35,17 +39,18 @@ namespace WorldGame {
 		const auto& damage() const { return dam; }
 	protected:
 	private:
-		int HP { 0 };//Enemy's Health
-		int dam { 0 };//Enemy's Damage
+		int HP { 0 };//Fighter's Health
+		int dam { 0 };//Fighter's Damage
 		Position curPos { 0 };//Current Position
-		std::list<Position> pLoop; //Enemy's Patrol Loop
-		std::vector<Position> vsion; //Enemy's Vision
-		Inspirator::Card crd;//Enemy's card
+		std::list<Position> pLoop; //Fighter's Patrol Loop
+		std::vector<Position> vsion; //Fighter's Vision
+		Inspirator::Card crd;//Fighter's card
+		std::unique_ptr<SpeechDeck> speechDeck;
 	};
 
 	namespace Details {
 		constexpr auto next_pos(Position a, Position b, int side_len);
-		void gen_stats(WorldGame::Enemy&);
+		void gen_stats(WorldGame::Fighter&);
 		std::list<Position> create_p_loop(const Map&);
 	}
 }

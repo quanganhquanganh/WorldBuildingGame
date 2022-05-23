@@ -37,17 +37,17 @@ namespace WorldGame {
 			return std::list<Position>(a.begin(), a.end());
 		}
 
-		void gen_stats(Enemy& e) {
+		void gen_stats(Fighter& e) {
 			e.health() = basic_random::get(5, 25);
 			e.damage() = basic_random::get(5, 20);
 		}
 	}
 
-	Enemy::Enemy(const Enemy& e)
+	Fighter::Fighter(const Fighter& e)
 		:HP{ e.HP }, dam{ e.dam }, curPos{e.curPos},
 		pLoop{ e.pLoop }, crd{ e.crd } {}
 
-	Enemy& Enemy::operator=(const Enemy& e) {
+	Fighter& Fighter::operator=(const Fighter& e) {
 		HP = e.HP;
 		dam = e.dam;
 		pLoop = e.pLoop;
@@ -55,61 +55,57 @@ namespace WorldGame {
 		curPos = e.curPos;
 		return *this;
 	}
-	
+	/*
+		Returns a list of ids of surrounding tiles
+		of the tile with id id
+	*/
+	auto sur_ids = [](int id, const Map& m) {
+		
+		auto size = (int)sqrt(m.tiles().size());
+		auto x = id % size;
+		auto y = (id - x) / size;
+		auto ids = std::vector<int>{};
+		ids.reserve(4);
+		if (x > 0) ids.push_back(id - 1);
+		if (x < size - 1) ids.push_back(id + 1);
+		if (y > 0) ids.push_back(id - size);
+		if (y < size - 1) ids.push_back(id + size);
+		return ids;
+	};
 
-	void Enemy::move_into(const Map& m) {
+	void Fighter::move_into(const Map& m) {
 		pLoop = Details::create_p_loop(m);
 		//Get current position from loop 
 		//then pop it from list
 		curPos = pLoop.front(); 
 		pLoop.pop_front();
 		//Add the position to the end of the list 
-		//assigning the enemy to go back at end of patrol
+		//assigning the Fighter to go back at end of patrol
 		pLoop.push_back(curPos);
 
 	}
 
-	void Enemy::move_card(Card& c) {
+	void Fighter::move_card(Card& c) {
 		crd = std::move(c);
 	}
 
 	template<class T>
 	using remove_const_ref_t = typename std::remove_const_t <std::remove_reference_t<T>>;
 
+	template<class T>
+	using remove_const_ref_ptr_t = typename std::remove_const_t <std::remove_reference_t<T>>*;
 
-
-	auto sur_ids(int id, const Map& m) {
-		/*
-		auto sI = sub_matrix_indexes_vector(std::)
-		sI.push_back(id - 1);
-		sI.push_back(id + 1);
-		sI.push_back(id - side_len);
-		sI.push_back(id + side_len);
-		sI.push_back(id - 1 - side_len);
-		sI.push_back(id + 1 - side_len);
-		sI.push_back(id - 1 + side_len);
-		sI.push_back(id + 1 + side_len);
-
-		return sI;*/
-	}
-
-	void Enemy::look(const Map& m) {
+	void Fighter::look(const Map& m) {
 		auto& tiles = m.tiles();
-		auto isValid = [&tiles](double id) {
-			return (id >= 0 && 
-				id < tiles.size());
-		};
 		remove_const_ref_t<decltype(tiles)> sT; //Surrounding tiles
-		/*
-		auto sI = sub_matrix_indexes_vector(m, m.);;
+		
+		auto sI = sur_ids(curPos, m);
 		for (auto i : sI) {
-			if (isValid(i)) {
-				sT.push_back(tiles[i]);
-			}
-		}*/
+			sT.push_back(tiles[i]);
+		}
 	}
 
-	void Enemy::next_move(const Map& m) {
+	void Fighter::next_move(const Map& m) {
 		this->look(m);
 		auto np = this->pLoop.front();//Get next target and
 		if (this->curPos == np) {//pop if already reached the target

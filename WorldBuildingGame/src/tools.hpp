@@ -110,6 +110,12 @@ public:
 		return uint(static_cast<std::default_random_engine&>(engine_instance()));
 	}
 
+	template<typename IntType>
+	static typename std::enable_if_t<is_int<IntType>::value, IntType> get(IntType end) {
+		std::uniform_int_distribution<> uint(0, end);
+		return uint(static_cast<std::default_random_engine&>(engine_instance()));
+	}
+
 	template<typename InputIt>
 	static typename std::enable_if_t<is_iterator<InputIt>::value
 		, InputIt> get(InputIt first, InputIt last) {
@@ -158,10 +164,14 @@ auto rnd_vals_no_dupl(std::vector<T> vT, std::size_t n) {
 */
 template<typename T>
 auto cut_sub_matrix(std::vector<T> vT, std::size_t top_left, std::size_t bottom_right) {
+	//Note: top_left and bottom_right are the indices of the top-left and bottom-right corners of the sub matrix
 	std::vector<T> res_vec;
 	auto side_len = sqrt(vT.size());
-	auto width = (bottom_right - top_left + 1) / side_len;
-	auto height = (bottom_right - top_left + 1) / width;
+	//Check if the indices are valid
+	assert(top_left < bottom_right && bottom_right <= side_len * side_len);
+	//Get width and height of the sub matrix using side_len
+	auto width = (bottom_right - top_left) / side_len;
+	auto height = (bottom_right - top_left) / width;
 
 	for (decltype(top_left) i = top_left; i <= bottom_right; ++i) {
 		for (decltype(top_left) j = top_left; j <= bottom_right; ++j) {
@@ -169,6 +179,16 @@ auto cut_sub_matrix(std::vector<T> vT, std::size_t top_left, std::size_t bottom_
 		}
 	}
 }
+
+/*
+	Path-finding algorithm
+	(https://en.wikipedia.org/wiki/A*_search_algorithm)
+*/
+template<typename T>
+auto a_star(std::vector<T> vT, std::size_t start, std::size_t end) {
+	//TODO: implement
+}
+
 //------------------------------------------------------------------------------------------------------------------------------------
 
 #endif // !TOOLS

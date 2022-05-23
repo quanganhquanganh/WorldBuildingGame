@@ -45,10 +45,10 @@ namespace Inspirator {
 		ev.push_back(s);
 	}
 
-	card_randomize::card_randomize(const std::vector<string>& d, const std::vector<string>& e)
+	CardFactory::CardFactory(const std::vector<string>& d, const std::vector<string>& e)
 		: dL{ d }, eL{ e } {}
 	
-	void card_randomize::operator()(Card& c) {
+	void CardFactory::operator()(Card& c) {
 		c.refresh();
 		for (size_t i = 0; i < c.des_size(); ++i) {
 			c.des_add(rand_element(dL));
@@ -69,7 +69,6 @@ namespace Inspirator {
 			return id;
 		}
 		std::getline(is, id, ';');
-		if (!is) { return id; }
 		return id;
 	}
 
@@ -95,7 +94,7 @@ namespace Inspirator {
         return res;
 	}
 
-	constexpr char DECK_HEAD[] = "deck"; //Do not mistake for dick_head
+	constexpr char DECK_HEAD[] = "deck";
 	constexpr char CARD_HEAD[] = "card";
 	constexpr char DES_HEAD[] = "des";
 	constexpr char EV_HEAD[] = "ev";
@@ -160,6 +159,36 @@ namespace Inspirator {
 		}
 		os << "};";
 		return os << ca.get_idea() << "}}";
+	}
+
+	//Deck member functions implementations------------------------------------------------------------------
+	Card& Deck::get_card(const string& id) { 
+		auto res = cm.find(id);
+		if (res == cm.end()) {
+			throw std::invalid_argument("No such card in deck");
+		}
+		return *(res->second); 
+	}
+	const Card& Deck::get_card(const string& id) const { 
+		auto res = cm.find(id);
+		if (res == cm.end()) {
+			throw std::invalid_argument("No such card in deck");
+		}
+		return *(res->second);  
+	}
+	Deck& Deck::get_deck(const string& id) { 
+		auto res = dm.find(id);
+		if (res == dm.end()) {
+			throw std::invalid_argument("No such deck in deck");
+		}
+		return *(res->second); 
+	}
+	const Deck& Deck::get_deck(const string& id) const { 
+		auto res = dm.find(id);
+		if (res == dm.end()) {
+			throw std::invalid_argument("No such deck in deck");
+		}
+		return *(res->second);
 	}
 
 	std::istream& operator>>(std::istream& is, Deck& de) {

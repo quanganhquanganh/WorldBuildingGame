@@ -20,6 +20,7 @@ namespace Inspirator {
 	/* Card's interface */
 	
 	class Card {
+	protected:
 		using size_t = std::vector<string>::size_type;
 		strvec des; //Descriptions
 		strvec ev; //Events
@@ -38,7 +39,7 @@ namespace Inspirator {
 		Card(Card&&) noexcept = default;
 		Card& operator=(Card&&) noexcept = default;
 
-		~Card() = default;
+		virtual ~Card() = default;
 
 		size_t des_size() const noexcept { return des_sze; }
 		size_t ev_size() const noexcept { return ev_sze; }
@@ -59,9 +60,14 @@ namespace Inspirator {
 		void refresh() { des.clear(); ev.clear(); idea = "None"; }
 	};
 	
-	class card_randomize {
+	/** @brief CardFactory class
+	 *
+	 * This class is used to create cards.
+	 * It is used to randomly generate cards of the player and the opponent.
+	 */
+	class CardFactory {
 	public:
-		card_randomize(const std::vector<string>&, const std::vector<string>&);
+		CardFactory(const std::vector<string>&, const std::vector<string>&);
 		void operator()(Card&);
 	private:
 		strvec dL; // Description list
@@ -79,8 +85,10 @@ namespace Inspirator {
 	/* Deck's interface */
 
 	class Deck {
+	private:
 		using CardPtr = std::shared_ptr<Card>;
 		using DeckPtr = std::shared_ptr<Deck>;
+	protected:
 		string n;
 		std::map<string, CardPtr> cm;
 		std::map<string, DeckPtr> dm;
@@ -91,11 +99,11 @@ namespace Inspirator {
 		string name() noexcept { return n; }
 		const string& name() const noexcept { return n; }
 		void put_name(const string& s) { n = s; }
-
-		Card& get_card(const string& id) { return *cm[id]; }
-		const Card& get_card(const string& id) const { return *(cm.find(id)->second); }
-		Deck& get_deck(const string& id) { return *dm[id]; }
-		const Deck& get_deck(const string& id) const { return *(dm.find(id)->second); }
+		
+		Card& get_card(const string& id);
+		const Card& get_card(const string& id) const;
+		Deck& get_deck(const string& id);
+		const Deck& get_deck(const string& id) const;
 		
 		const auto& cards_map() const noexcept{ return cm; }
 		const auto& decks_map() const noexcept{ return dm; }

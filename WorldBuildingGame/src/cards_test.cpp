@@ -40,22 +40,22 @@ std::vector<string> get_ev(std::istream& is) {
 	return ev_list;
 }
 
-int main() {
-	basic_random::seed(static_cast<long>(time(NULL) * time(NULL)));
-	{
-		using namespace Inspirator;
-		std::ifstream ifs{"english.txt"}; 
+// int main() {
+// 	basic_random::seed(static_cast<long>(time(NULL) * time(NULL)));
+// 	{
+// 		using namespace Inspirator;
+// 		std::ifstream ifs{"english.txt"}; 
 		
-		std::vector<string> des_list;
-		std::vector<string> ev_list;
+// 		std::vector<string> des_list;
+// 		std::vector<string> ev_list;
 
-		des_list = get_des(ifs);
-		ev_list = get_ev(ifs);
+// 		des_list = get_des(ifs);
+// 		ev_list = get_ev(ifs);
 		
-		Card c;
-		auto cr = card_randomize(des_list, ev_list);
-		cr(c);
-		std::cout << c << std::endl;
-	}
+// 		Card c;
+// 		auto cr = card_randomize(des_list, ev_list);
+// 		cr(c);
+// 		std::cout << c << std::endl;
+// 	}
 	
-}
+// }
