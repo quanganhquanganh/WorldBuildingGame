@@ -20,7 +20,7 @@ namespace WorldGame {
         enum class SkillType {
             Combat,
             Stealth,
-            Social,
+            Luck,
             Null
         };
 

@@ -56,7 +56,6 @@ namespace WorldGame {
         void put_uses(const int& s) { _uses = s; }
         void put_type(const SpeechType& s) { _type = s; }
         void put_skills(const std::vector<std::pair<Skill, int>>& s) { _skills = s; };
-        void add_speech(const Speech& s);
 
     private:
         /**

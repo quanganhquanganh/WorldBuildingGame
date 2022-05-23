@@ -39,7 +39,7 @@ namespace Inspirator {
 		Card(Card&&) noexcept = default;
 		Card& operator=(Card&&) noexcept = default;
 
-		virtual ~Card() = default;
+		~Card() = default;
 
 		size_t des_size() const noexcept { return des_sze; }
 		size_t ev_size() const noexcept { return ev_sze; }
