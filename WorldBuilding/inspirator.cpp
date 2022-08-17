@@ -1,5 +1,5 @@
 #include <fstream>
-#include "cards.hpp"
+#include "WorldBuilding/inspirator.hpp"
 #include "tools.hpp"
 
 namespace Inspirator {
@@ -162,13 +162,23 @@ namespace Inspirator {
 	}
 
 	//Deck member functions implementations------------------------------------------------------------------
-	Card& Deck::get_card(const string& id) { 
+	
+  Card& Deck::get_card(const string& id) { 
 		auto res = cm.find(id);
 		if (res == cm.end()) {
 			throw std::invalid_argument("No such card in deck");
 		}
 		return *(res->second); 
 	}
+
+  Deck::CardPtr& Deck::get_card_ptr(const string& id) {
+    auto res = cm.find(id);
+    if (res == cm.end()) {
+      throw std::invalid_argument("No such card in deck");
+    }
+    return res->second;
+  }
+
 	const Card& Deck::get_card(const string& id) const { 
 		auto res = cm.find(id);
 		if (res == cm.end()) {
@@ -176,6 +186,7 @@ namespace Inspirator {
 		}
 		return *(res->second);  
 	}
+
 	Deck& Deck::get_deck(const string& id) { 
 		auto res = dm.find(id);
 		if (res == dm.end()) {
@@ -183,6 +194,15 @@ namespace Inspirator {
 		}
 		return *(res->second); 
 	}
+
+  Deck::DeckPtr& Deck::get_deck_ptr(const string& id) {
+    auto res = dm.find(id);
+    if (res == dm.end()) {
+      throw std::invalid_argument("No such deck in deck");
+    }
+    return res->second;
+  }
+
 	const Deck& Deck::get_deck(const string& id) const { 
 		auto res = dm.find(id);
 		if (res == dm.end()) {

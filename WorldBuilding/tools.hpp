@@ -141,6 +141,11 @@ inline typename std::enable_if_t<is_stl_container<Container>::value, typename Co
 }
 
 template<typename T>
+auto shuffle(T& v) -> typename std::enable_if_t<is_stl_container<T>::value, void> {
+  std::shuffle(std::begin(v), std::end(v), basic_random::engine());
+}
+
+template<typename T>
 auto rnd_vals_no_dupl(std::vector<T> vT, std::size_t n) {
 	std::vector<T> res_vec;
 	n = std::min(n, vT.size());

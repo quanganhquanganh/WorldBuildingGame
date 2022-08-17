@@ -21,21 +21,10 @@ project "WorldBuilding"
   targetdir(tdir)
   objdir(odir)
 
-  files
+  sysincludedirs
   {
-    "%{prj.name}/include/**.h",
-    "%{prj.name}/include/**.hpp",
-    "%{prj.name}/include/**.cpp",
-    "%{prj.name}/src/**.h",
-    "%{prj.name}/src/**.cpp",
-    "%{prj.name}/**.natvis"
+    "%{prj.name}/include",
   }
-
-project "WorldBuildingGame"
-  location "WorldBuildingGame"
-  kind "ConsoleApp"
-  language "C++"
-  cppdialect "C++17"
 
   files
   {
@@ -46,6 +35,32 @@ project "WorldBuildingGame"
     "%{prj.name}/src/**.hpp",
     "%{prj.name}/src/**.cpp",
     "%{prj.name}/**.natvis"
+  }
+
+project "WorldBuildingGame"
+  location "WorldBuildingGame"
+  kind "ConsoleApp"
+  language "C++"
+  cppdialect "C++17"
+  links { "WorldBuilding" }
+
+  files
+  {
+    "%{prj.name}/include/**.h",
+    "%{prj.name}/include/**.hpp",
+    "%{prj.name}/include/**.cpp",
+    "%{prj.name}/src/**.h",
+    "%{prj.name}/src/**.hpp",
+    "%{prj.name}/src/**.cpp",
+    "%{prj.name}/**.natvis"
+  }
+
+  targetdir(tdir)
+  objdir(odir)
+  
+  sysincludedirs
+  {
+    "WorldBuilding/include",
   }
 
   flags

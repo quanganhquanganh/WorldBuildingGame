@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-#include "cards.hpp"
+#include "../inspirator.hpp"
 
 namespace WorldGame {
   // Skill class foward decl
@@ -31,18 +31,20 @@ namespace WorldGame {
     const std::vector<std::string>& get_events() { return _card->get_ev(); }
     const std::vector<std::pair<Skill, int>>& get_skills() const noexcept { return _skills; }
     const int get_uses() const noexcept { return _uses; }
-    void put_name(const std::string& s) { _name = s; }
+    void put_name(const std::string& s);
     void put_details(const std::string& s) { return _card->put_idea(s); }
     void put_uses(const int& s) { _uses = s; }
     void put_skills(const std::vector<std::pair<Skill, int>>& s) { _skills = s; };
     
-    virtual double get_damage() = 0;
-    virtual void generate() = 0;
-    virtual void reverse_skill(const Skill& s) = 0;
+    virtual double get_damage();
+    virtual void reverse_skill(const Skill& s);
+    virtual void use_card();
+    virtual void use_card(const int& i);
 
+    virtual void generate();
     virtual ~BaseCard() = default;
 
-  private:
+  protected:
     /**
      * @brief _name
      *
@@ -64,6 +66,15 @@ namespace WorldGame {
      * The list of skills and their percentages.
      */
     std::vector<std::pair<Skill, int>> _skills;
+    /**
+     * @brief _deck
+     * Static shared pointer to the deck.
+     */
+    static Inspirator::Deck& _deck;
+    /**
+     * @brief Static card factory
+     */
+    static Inspirator::CardFactory& _card_factory;
   };
 }
 

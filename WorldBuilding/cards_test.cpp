@@ -1,4 +1,4 @@
-#include "cards.hpp"
+#include "WorldBuilding/inspirator.hpp"
 #include "tools.hpp"
 #include <time.h>
 #include <fstream>

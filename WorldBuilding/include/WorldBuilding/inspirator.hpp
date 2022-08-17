@@ -101,8 +101,10 @@ namespace Inspirator {
 		void put_name(const string& s) { n = s; }
 		
 		Card& get_card(const string& id);
+    CardPtr& get_card_ptr(const string& id);
 		const Card& get_card(const string& id) const;
 		Deck& get_deck(const string& id);
+    DeckPtr& get_deck_ptr(const string& id);
 		const Deck& get_deck(const string& id) const;
 		
 		const auto& cards_map() const noexcept{ return cm; }
@@ -116,12 +118,16 @@ namespace Inspirator {
 		void add_card(const string& id, CardPtr&& s) { cm.insert(std::make_pair(id, std::forward<CardPtr>(s))); }
 		
 		void add_card(const string& id, Card* p) { cm.insert(std::make_pair(id, CardPtr(p))); }
+
+    void remove_card(const string& id) { cm.erase(id); }
 		
 		void add_deck(const string& id, const DeckPtr& s) { dm.insert(std::make_pair(id, s)); }
 
 		void add_deck(const string& id, DeckPtr&& p) { dm.insert(std::make_pair(id, std::forward<DeckPtr>(p))); }
 		
 		void add_deck(const string& id, Deck* p) { dm.insert(std::make_pair(id, DeckPtr(p))); }
+
+    void remove_deck(const string& id) { dm.erase(id); }
 	};
 
 	std::istream& operator>>(std::istream& is, Deck& deck); //Input operator for Deck

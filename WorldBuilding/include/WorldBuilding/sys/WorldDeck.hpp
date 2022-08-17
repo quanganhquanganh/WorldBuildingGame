@@ -1,7 +1,8 @@
 #ifndef WORLDGAME_DECK_HPP
 #define WORLDGAME_DECK_HPP
 
-#include "cards.hpp"
+#include <string>
+#include "../inspirator.hpp"
 
 namespace WorldGame {
   class WorldDeck {

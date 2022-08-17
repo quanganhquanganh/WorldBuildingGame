@@ -1,5 +1,5 @@
-#ifndef SKILL_H
-#define SKILL_H
+#ifndef SKILL_HPP
+#define SKILL_HPP
 
 #include <string>
 
@@ -82,4 +82,4 @@ namespace WorldGame {
     };
 }
 
-#endif // !SKILL_H
+#endif // !SKILL_HPP
