@@ -30,7 +30,7 @@
 
 **4. Armors**
 
-**5. Moments/Lessons/Plots/Scenarios**
+**5. Stories**
 
 **6. Enemies**
 
