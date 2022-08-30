@@ -20,7 +20,7 @@
 2.  **Lore**
 3.  **Character Building**
 
-**GAME ELEMENTS: ALL REVOLVES AROUND BASE CARDS**
+**GAME ELEMENTS: ALL REVOLVE AROUND BASE CARDS**
 
 **1. Cores**
 
